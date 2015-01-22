@@ -16,8 +16,8 @@ import os
 
 class Story :
     __orderOfParts = [""]
-    __text = None
-    __inputsEntered = None
+    __text = ""
+    __inputsEntered = []
     __index = 0
 
 #Initalizers | Getters & Setters
@@ -49,8 +49,8 @@ class Story :
         else:
             return self.__inputsEntered[index]
 
-    def setNextInput(self, input):
-        self.__inputsEntered.append(input)
+    def setNextInput(self, user):
+        self.__inputsEntered.append(user)
 
     def getIndex(self):
         return self.__index
@@ -59,8 +59,8 @@ class Story :
         self.__index = self.__index + 1
 
     #Stringing the Story Together
-    def stringStory(self, story):
-        if len(self.getInputsEntered()) != len(self.getOrderOfParts()) :
+    def stringStory(self):
+        if len(self.getInputsEntered()) != len(self.getAllOrderOfParts()):
             return "The story isn't ready yet!"
         else :
             #print out the story with the appropriate input
@@ -88,7 +88,7 @@ dayAtDisneyText = "Today, I went to the Disney World with my best friend. I saw 
 dayAtDisney = Story(["adjective", "noun", "adjective", "noun", "adverb", "noun", "adjective", "noun"],
                     dayAtDisneyText)
 
-
+# Messages
 
 def welcomeMessage(speech):
     return "Welcome to the Mad Libs Generator! Enter an {} to start your story!".format\
@@ -96,8 +96,10 @@ def welcomeMessage(speech):
 
 def nextMessage(speech):
     #Add something like if starts with vowel, use an versus a
-    return "Enter a {} to continue."
+    return "Enter a {} to continue.".format(speech)
 
+def endMessage():
+    return "Congratulations! You finished your story!"
 
 #RUNNING THIS:
 firstPartOfSpeech = dayAtDisney.getNextOrderOfParts()
@@ -106,6 +108,20 @@ inputOne = sys.stdin.readline()
 #Check to make sure it matches up to the correct part of speech
 dayAtDisney.setNextInput(inputOne)
 
-print(nextMessage())
+i = len(dayAtDisney.getAllOrderOfParts()) - 1
+
+for x in range(0, i):
+    nextPartOfSpeech = dayAtDisney.getNextOrderOfParts()
+    print(nextMessage(nextPartOfSpeech))
+    nextInput = sys.stdin.readline()
+    #Check to make sure it matches up to the correct part of speech
+    dayAtDisney.setNextInput(nextInput)
+
+print(endMessage())
+print(dayAtDisney.stringStory())
+
+
+
+
 
 
