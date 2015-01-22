@@ -27,11 +27,21 @@
       <file leaf-file-name="madLibs.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/madLibs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7927711" vertical-offset="436" max-vertical-offset="1290">
-              <caret line="51" column="40" selection-start-line="51" selection-start-column="40" selection-end-line="51" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.4939759" vertical-offset="1340" max-vertical-offset="1755">
+              <caret line="103" column="40" selection-start-line="103" selection-start-column="40" selection-end-line="103" selection-end-column="40" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hellopython.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../PythonInOneVideo/hellopython.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3686" max-vertical-offset="5355">
+              <caret line="268" column="44" selection-start-line="268" selection-start-column="44" selection-end-line="268" selection-end-column="44" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -47,8 +57,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="77" />
-    <option name="y" value="46" />
+    <option name="x" value="62" />
+    <option name="y" value="67" />
     <option name="width" value="1094" />
     <option name="height" value="704" />
   </component>
@@ -293,7 +303,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="77" y="46" width="1094" height="704" extended-state="0" />
+    <frame x="62" y="67" width="1094" height="704" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -368,15 +378,15 @@
     <entry file="file://$PROJECT_DIR$/../PythonInOneVideo/hellopython.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3686" max-vertical-offset="5355">
-          <caret line="272" column="46" selection-start-line="269" selection-start-column="8" selection-end-line="272" selection-end-column="46" />
+          <caret line="268" column="44" selection-start-line="268" selection-start-column="44" selection-end-line="268" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/madLibs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7927711" vertical-offset="436" max-vertical-offset="1290">
-          <caret line="51" column="40" selection-start-line="51" selection-start-column="40" selection-end-line="51" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.4939759" vertical-offset="1340" max-vertical-offset="1755">
+          <caret line="103" column="40" selection-start-line="103" selection-start-column="40" selection-end-line="103" selection-end-column="40" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

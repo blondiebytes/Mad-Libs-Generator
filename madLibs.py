@@ -16,31 +16,49 @@ import os
 
 class Story :
     __orderOfParts = [""]
-    __inputsEntered = None
     __text = None
+    __inputsEntered = None
+    __index = 0
 
+#Initalizers | Getters & Setters
     def __init__ (self, orderOfParts, story):
         self.__orderOfParts = orderOfParts
         self.__story = story
 
-    def getOrderOfParts(self, specificIndex = None):
-        if specificIndex is None:
-            return self.__orderOfParts
-        else:
-            return self.__orderOfParts[specificIndex]
+    def getNextOrderOfParts(self):
+        oldIndex = self.getIndex()
+        if oldIndex >= len(self.getAllOrderOfParts()):
+            return "out"
+        else :
+            self.incrementIndex()
+            return self.getAllOrderOfParts()[oldIndex]
+
+    def getAllOrderOfParts(self):
+        return self.__orderOfParts
+
+    # No Setter because OrderOfParts shouldn't change after initialization
 
     def getBasicStoryText(self):
         return self.__text
 
-    def getInputsEntered(self, specificIndex = None):
-        if specificIndex is None:
+    # No Setter because the basic story text shouldn't change after initialization
+
+    def getInputsEntered(self, index=None):
+        if index is None:
             return self.__inputsEntered
         else:
-            return self.__inputsEntered[specificIndex]
+            return self.__inputsEntered[index]
 
-    def setNextInput(self, specificInput):
-        self.__inputsEntered.append(specificInput)
+    def setNextInput(self, input):
+        self.__inputsEntered.append(input)
 
+    def getIndex(self):
+        return self.__index
+
+    def incrementIndex(self):
+        self.__index = self.__index + 1
+
+    #Stringing the Story Together
     def stringStory(self, story):
         if len(self.getInputsEntered()) != len(self.getOrderOfParts()) :
             return "The story isn't ready yet!"
@@ -55,13 +73,6 @@ class Story :
             basicStory = basicStory.format(x)
         return basicStory
 
-
-dayAtDisneyText = "Today, I went to the Disney World with my best friend. I saw a {} {} " \
-                  "in a {} show at the Magic Kingdom and ate {} for dinner. The next day I ran {}" \
-                  "to meet Mickey Mouse in his {} and that night I gazed at the {} fireworks shooting" \
-                  "from the {}"
-dayAtDisney = Story(["adjective", "noun", "adjective", "noun", "adverb", "noun", "adjective", "noun"], dayAtDisneyText)
-
 # ------------------
 # Yay, this is a thing!
 string = "hello there {}"
@@ -70,11 +81,31 @@ print(string)
 # ------------------
 
 
+dayAtDisneyText = "Today, I went to the Disney World with my best friend. I saw a {} {} " \
+                  "in a {} show at the Magic Kingdom and ate {} for dinner. The next day I ran {}" \
+                  "to meet Mickey Mouse in his {} and that night I gazed at the {} fireworks shooting" \
+                  "from the {}"
+dayAtDisney = Story(["adjective", "noun", "adjective", "noun", "adverb", "noun", "adjective", "noun"],
+                    dayAtDisneyText)
 
-def welcomeMessage(speech) :
-    return "Welcome to the Mad Libs Generator! Enter an {} to start your story!".format('hello')
 
 
-print(welcomeMessage('speech'))
+def welcomeMessage(speech):
+    return "Welcome to the Mad Libs Generator! Enter an {} to start your story!".format\
+        (speech)
+
+def nextMessage(speech):
+    #Add something like if starts with vowel, use an versus a
+    return "Enter a {} to continue."
+
+
+#RUNNING THIS:
+firstPartOfSpeech = dayAtDisney.getNextOrderOfParts()
+print(welcomeMessage(firstPartOfSpeech))
+inputOne = sys.stdin.readline()
+#Check to make sure it matches up to the correct part of speech
+dayAtDisney.setNextInput(inputOne)
+
+print(nextMessage())
 
 
