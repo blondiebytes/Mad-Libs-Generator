@@ -86,6 +86,29 @@ class MadLib :
 # ------------------
 
 
+# Checking if User Input is the right type of speech
+def checkUserInputCorrect(speech, userInput) :
+    if (speech == 'adjective'):
+        return adjectiveInputCheck(userInput)
+    else :
+        return True
+
+def adjectiveInputCheck(userInput) :
+    userInput = userInput.lower()
+    adjectivesFile = open("adjectives.txt", 'r')
+    currentLine = adjectivesFile.readline()
+    # Find a better way to store the data so the program doesn't
+    # have to go through every entry in the worst case scenario
+    while currentLine != "":
+        if currentLine != userInput:
+            currentLine = adjectivesFile.readline()
+        else:
+            adjectivesFile.close()
+            return True
+    adjectivesFile.close()
+    return False
+
+
 # Example of a Mad Lib
 # TO DO: Create a data base with many Mad Libs and have the program choose one at random
 dayAtDisneyText = "\nToday, I went to the Disney World with my best friend. I saw a {} {} \n" \
@@ -96,7 +119,7 @@ dayAtDisney = MadLib(["adjective", "noun", "adjective", "noun", "adverb", "noun"
                     dayAtDisneyText)
 
 
-# Messages
+# UI Messages
 def welcomeMessage(speech):
     return "Welcome to the Mad Libs Generator! Enter an {} to start your story!".format\
         (speech)
@@ -109,23 +132,34 @@ def endMessage():
     return "Congratulations! You finished your story!"
 
 
-#RUNNING THIS:
+# WHAT WE RUN:
+# -----------------------
+# PART I:
 firstPartOfSpeech = dayAtDisney.getNextOrderOfParts()
 print(welcomeMessage(firstPartOfSpeech))
 inputOne = sys.stdin.readline()
+while (not (checkUserInputCorrect(firstPartOfSpeech, inputOne))):
+    print((checkUserInputCorrect(firstPartOfSpeech, inputOne)))
+    print("I'm sorry. That is not a {}".format(firstPartOfSpeech))
+    inputOne = sys.stdin.readline()
 #Check to make sure it matches up to the correct part of speech
 dayAtDisney.setNextInput(inputOne)
 
+# PART II:
 i = len(dayAtDisney.getAllOrderOfParts()) - 1
 for x in range(0, i):
     nextPartOfSpeech = dayAtDisney.getNextOrderOfParts()
     print(nextMessage(nextPartOfSpeech))
     nextInput = sys.stdin.readline()
-    #Check to make sure it matches up to the correct part of speech
+    #Check to make sure User Input matches up to the correct Part of Speech
+    while not (checkUserInputCorrect(nextPartOfSpeech, nextInput)):
+        print("I'm sorry. That is not a {}".format(nextPartOfSpeech))
+        nextInput = sys.stdin.readline()
     dayAtDisney.setNextInput(nextInput)
    # print(dayAtDisney.getAllOrderOfParts())
    # print(dayAtDisney.getInputsEntered())
 
+# PART III:
 print('\n')
 print(endMessage())
 print(dayAtDisney.stringStory())
