@@ -14,8 +14,9 @@ import os
 
 # Add a feature where the user could create a story?
 
-# Adjectives Source: http://www.enchantedlearning.com/wordlist/adjectives.shtml
-
+# Adjectives Data Source: http://www.enchantedlearning.com/wordlist/adjectives.shtml
+# Adverb Data Source: http://www.momswhothink.com/reading/list-of-adverbs.html#Adverbs List
+# Noun Data Source: http://www.talkenglish.com/Vocabulary/Top-1500-Nouns.aspx
 
 class MadLib :
     __orderOfParts = [""]
