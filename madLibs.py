@@ -14,6 +14,8 @@ import os
 
 # Add a feature where the user could create a story?
 
+# Adjectives Source: http://www.enchantedlearning.com/wordlist/adjectives.shtml
+
 
 class MadLib :
     __orderOfParts = [""]
@@ -26,6 +28,7 @@ class MadLib :
         self.__orderOfParts = orderOfParts
         self.__text = story
 
+    #__orderOfParts | Getters & Setters
     def getNextOrderOfParts(self):
         oldIndex = self.getIndex()
         if oldIndex >= len(self.getAllOrderOfParts()):
@@ -39,11 +42,13 @@ class MadLib :
 
     # No Setter because OrderOfParts shouldn't change after initialization
 
+    #__text | Getters & Setters
     def getBasicStoryText(self):
         return self.__text
 
     # No Setter because the basic story text shouldn't change after initialization
 
+    #__inputsEntered | Getters & Setters
     def getInputsEntered(self, index=None):
         if index is None:
             return self.__inputsEntered
@@ -54,6 +59,7 @@ class MadLib :
         # The range takes out /n
         self.__inputsEntered.append(user[:-1])
 
+    #__index | Getters & Setters
     def getIndex(self):
         return self.__index
 
@@ -78,36 +84,22 @@ class MadLib :
         return finishedStory
 
 
-# ------------------
-# Yay, this is a thing!
-# string = "hello there {}"
-# string = string.format('hello')
-# print(string)
-# ------------------
-
-
-# Checking if User Input is the right type of speech
-def checkUserInputCorrect(speech, userInput) :
-    if (speech == 'adjective'):
-        return adjectiveInputCheck(userInput)
-    else :
-        return True
-
-def adjectiveInputCheck(userInput) :
-    userInput = userInput.lower()
-    adjectivesFile = open("adjectives.txt", 'r')
-    currentLine = adjectivesFile.readline()
+# Check User Input: if right type of speech
+def checkUserInput(speech, userInput) :
+    userInput = userInput.lower
+    speechFile = open("{}.txt".format(speech), 'r')
+    currentLine = speechFile.readline()
     # Find a better way to store the data so the program doesn't
     # have to go through every entry in the worst case scenario
+    # Try to go from O(n) to O(log(n)) or O(1)
     while currentLine != "":
         if currentLine != userInput:
-            currentLine = adjectivesFile.readline()
+            currentLine = speechFile.readline()
         else:
-            adjectivesFile.close()
+            speechFile.close()
             return True
-    adjectivesFile.close()
+    speechFile.close()
     return False
-
 
 # Example of a Mad Lib
 # TO DO: Create a data base with many Mad Libs and have the program choose one at random
@@ -138,8 +130,8 @@ def endMessage():
 firstPartOfSpeech = dayAtDisney.getNextOrderOfParts()
 print(welcomeMessage(firstPartOfSpeech))
 inputOne = sys.stdin.readline()
-while (not (checkUserInputCorrect(firstPartOfSpeech, inputOne))):
-    print((checkUserInputCorrect(firstPartOfSpeech, inputOne)))
+while (not (checkUserInput(firstPartOfSpeech, inputOne))):
+    print((checkUserInput(firstPartOfSpeech, inputOne)))
     print("I'm sorry. That is not a {}".format(firstPartOfSpeech))
     inputOne = sys.stdin.readline()
 #Check to make sure it matches up to the correct part of speech
@@ -152,7 +144,7 @@ for x in range(0, i):
     print(nextMessage(nextPartOfSpeech))
     nextInput = sys.stdin.readline()
     #Check to make sure User Input matches up to the correct Part of Speech
-    while not (checkUserInputCorrect(nextPartOfSpeech, nextInput)):
+    while not (checkUserInput(nextPartOfSpeech, nextInput)):
         print("I'm sorry. That is not a {}".format(nextPartOfSpeech))
         nextInput = sys.stdin.readline()
     dayAtDisney.setNextInput(nextInput)
