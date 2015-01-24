@@ -4,15 +4,19 @@ import os
 # MAD LIBS OBJECTIVES
 # The user inputs an adjective, noun, or adverb depending on the what the program asks for.
 # After entering a certain number of words, the program prints out a story with the adjectives,
-# nouns, and adverbs the user inputted.
+# nouns, and adverbs the user inputted. (DONE)
 
 # The program should also check to make sure the user inputs the correct part of speech according
-# to what the program is asking for.
+# to what the program is asking for. (DONE)
 
 # If the user does not input anything (aka just presses enter), then the program will
 # come up with a random adjective, noun, etc to put in the space.
 
-# Add a feature where the user could create a story?
+
+# TO DO:
+# Add randomization if user inputs nothing
+# Create better hash --> log(N) or (1) --> that allows the mad libs to have different numbered inputs
+# Feature where user creates a story
 
 # Adjectives Data Source: http://www.enchantedlearning.com/wordlist/adjectives.shtml
 # Adverb Data Source: http://www.momswhothink.com/reading/list-of-adverbs.html#Adverbs List
@@ -25,6 +29,7 @@ class MadLib :
     __index = 0
 
     #Initalizers | Getters & Setters
+    #---------------------------------
     def __init__ (self, orderOfParts, story):
         self.__orderOfParts = orderOfParts
         self.__text = story
@@ -41,13 +46,9 @@ class MadLib :
     def getAllOrderOfParts(self):
         return self.__orderOfParts
 
-    # No Setter because OrderOfParts shouldn't change after initialization
-
     #__text | Getters & Setters
     def getBasicStoryText(self):
         return self.__text
-
-    # No Setter because the basic story text shouldn't change after initialization
 
     #__inputsEntered | Getters & Setters
     def getInputsEntered(self, index=None):
@@ -68,6 +69,7 @@ class MadLib :
         self.__index = self.__index + 1
 
     #Stringing the Story Together
+    #-----------------------------
     def stringStory(self):
         if len(self.getInputsEntered()) != len(self.getAllOrderOfParts()):
             return "The story isn't ready yet!"
@@ -87,7 +89,7 @@ class MadLib :
 
 # Check User Input: if right type of speech
 def checkUserInput(speech, userInput) :
-    userInput = userInput.lower
+    userInput = userInput.lower()
     speechFile = open("{}.txt".format(speech), 'r')
     currentLine = speechFile.readline()
     # Find a better way to store the data so the program doesn't
@@ -102,8 +104,9 @@ def checkUserInput(speech, userInput) :
     speechFile.close()
     return False
 
+
 # Example of a Mad Lib
-# TO DO: Create a data base with many Mad Libs and have the program choose one at random
+# TO DO: Create a database with many Mad Libs and have the program choose one at random
 dayAtDisneyText = "\nToday, I went to the Disney World with my best friend. I saw a {} {} \n" \
                   "in a {} show at the Magic Kingdom and ate {} for dinner. The next day \nI ran {}" \
                   " to meet Mickey Mouse in his {} and that night I gazed at \nthe {} fireworks shooting" \
@@ -121,6 +124,9 @@ def nextMessage(speech):
     #Add something like if starts with vowel, use an versus a
     return "Enter a {} to continue.".format(speech)
 
+def badInputMessage(speech):
+    return ("I'm sorry. That is not a {}.".format(speech))
+
 def endMessage():
     return "Congratulations! You finished your story!"
 
@@ -132,8 +138,7 @@ firstPartOfSpeech = dayAtDisney.getNextOrderOfParts()
 print(welcomeMessage(firstPartOfSpeech))
 inputOne = sys.stdin.readline()
 while (not (checkUserInput(firstPartOfSpeech, inputOne))):
-    print((checkUserInput(firstPartOfSpeech, inputOne)))
-    print("I'm sorry. That is not a {}".format(firstPartOfSpeech))
+    print(badInputMessage(firstPartOfSpeech))
     inputOne = sys.stdin.readline()
 #Check to make sure it matches up to the correct part of speech
 dayAtDisney.setNextInput(inputOne)
@@ -146,7 +151,7 @@ for x in range(0, i):
     nextInput = sys.stdin.readline()
     #Check to make sure User Input matches up to the correct Part of Speech
     while not (checkUserInput(nextPartOfSpeech, nextInput)):
-        print("I'm sorry. That is not a {}".format(nextPartOfSpeech))
+        print(badInputMessage(nextPartOfSpeech))
         nextInput = sys.stdin.readline()
     dayAtDisney.setNextInput(nextInput)
    # print(dayAtDisney.getAllOrderOfParts())
