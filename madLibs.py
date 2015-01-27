@@ -104,6 +104,66 @@ def checkUserInput(speech, userInput) :
     speechFile.close()
     return False
 
+class HashEntry :
+    __key = ""
+    __value = ""
+
+    def __init__(self, key, value):
+        self.__key = key
+        self.__value = value
+
+    def getValue(self):
+        return self.__value
+
+    def getKey(self):
+        return self.__key
+
+
+class HashTable :
+    __size = None
+    buckets = []
+    __letterDictionary = {"aVal":0,
+                        "bVal":1,
+                        "cVal":2,
+                        "dVal":3,
+                        "eVal":4,
+                        "fVal":5,
+                        "gVal":6,
+                        "hVal":7,
+                        "iVal":8,
+                        "jVal":9,
+                        "kVal":10,
+                        "lVal":11,
+                        "mVal":12,
+                        "nVal":13,
+                        "pVal":14,
+                        "oVal":15,
+                        "uVal":16,
+                        "rVal":17,
+                        "sVal":18,
+                        "tVal":19,
+                        "uVal":20,
+                        "vVal":21,
+                        "wVal":22,
+                        "xVal":23,
+                        "yVal":24,
+                        "zVal":25
+                        }
+
+    def __init__(self):
+        self.__size = 26
+        self.buckets = [0] * self.__size
+
+    def add(self, thing):
+        self.buckets[hash(thing)].append(hash(thing),thing)
+
+    def __hash__(self, thing):
+        firstLetter = thing[0]
+        key = firstLetter + "Val"
+        value = self.__letterDictionary[key]
+        return value
+
+
 
 # Example of a Mad Lib
 # TO DO: Create a database with many Mad Libs and have the program choose one at random
