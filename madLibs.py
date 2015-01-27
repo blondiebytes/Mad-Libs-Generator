@@ -121,7 +121,7 @@ class HashEntry :
 
 class HashTable :
     __size = None
-    buckets = []
+    buckets = None
     __letterDictionary = {"aVal":0,
                         "bVal":1,
                         "cVal":2,
@@ -152,16 +152,27 @@ class HashTable :
 
     def __init__(self):
         self.__size = 26
-        self.buckets = [0] * self.__size
+        self.buckets = [[] for x in range(self.__size)]
 
     def add(self, thing):
-        self.buckets[hash(thing)].append(hash(thing),thing)
+        self.buckets[self.__hash__(thing)] = thing
+
+    def isThere(self, thing):
+        return self.buckets.__contains__(thing)
 
     def __hash__(self, thing):
         firstLetter = thing[0]
         key = firstLetter + "Val"
         value = self.__letterDictionary[key]
         return value
+
+hashtable = HashTable()
+
+#Colliding Hashtable
+hashtable.add("hi")
+hashtable.add("he")
+print(hashtable.isThere("hi"))
+print(hashtable.isThere("he"))
 
 
 
