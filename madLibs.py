@@ -3,7 +3,7 @@ import os
 
 # MAD LIBS OBJECTIVES
 # The user inputs an adjective, noun, or adverb depending on the what the program asks for.
-# After entering a certain number of words, the program prints out a story with the adjectives,
+# After entering any number of words (depending on the Mad Lib)*, the program prints out a story with the adjectives,
 # nouns, and adverbs the user inputted. (DONE)
 
 # The program should also check to make sure the user inputs the correct part of speech according
@@ -12,10 +12,12 @@ import os
 # If the user does not input anything (aka just presses enter), then the program will
 # come up with a random adjective, noun, etc to put in the space.
 
+# * This program allows for Mad Libs of different lengths to be completed
+
 
 # TO DO:
 # Add randomization if user inputs nothing
-# Create better hash --> log(N) or (1) --> that allows the mad libs to have different numbered inputs
+# Create better hash for looking up if the user's input is the correct POS--> log(N) or (1)
 # Feature where user creates a story
 
 # Adjectives Data Source: http://www.enchantedlearning.com/wordlist/adjectives.shtml
@@ -24,7 +26,7 @@ import os
 
 class MadLib :
     __orderOfParts = [""]
-    __text = ""
+    __text = [""]
     __inputsEntered = []
     __index = 0
 
@@ -80,10 +82,12 @@ class MadLib :
     def putStoryTogether(self):
         basicStory = self.getBasicStoryText()
         inputs = self.getInputsEntered()
-        # TO DO: figure out a cleaner way to do this
-        finishedStory = basicStory.format(inputs[0],inputs[1], inputs[2],
-                                       inputs[3], inputs[4], inputs[5],
-                                       inputs[6],inputs[7])
+        finishedStory = ""
+        i = 0
+        for section in basicStory :
+            section = section.format(inputs[i])
+            finishedStory = finishedStory + section
+            i += 1
         return finishedStory
 
 
@@ -104,6 +108,11 @@ def checkUserInput(speech, userInput) :
     speechFile.close()
     return False
 
+
+
+
+# HASHTABLE STUFF
+# -----------------
 class HashEntry :
     __key = ""
     __value = ""
@@ -178,10 +187,15 @@ print(hashtable.isThere("he"))
 
 # Example of a Mad Lib
 # TO DO: Create a database with many Mad Libs and have the program choose one at random
-dayAtDisneyText = "\nToday, I went to the Disney World with my best friend. I saw a {} {} \n" \
-                  "in a {} show at the Magic Kingdom and ate {} for dinner. The next day \nI ran {}" \
-                  " to meet Mickey Mouse in his {} and that night I gazed at \nthe {} fireworks shooting" \
-                  " from the {}"
+dayAtDisneyText = ["\nToday, I went to the Disney World with my best friend. I saw a {}",
+                   " {} \n in a",
+                   " {} show at the Magic Kingdom and ate",
+                   " {} for dinner. The next day I ran",
+                   " {} to meet Mickey Mouse in his",
+                   " {} and that night I gazed at \nthe",
+                   " {} fireworks shooting",
+                   " from the {}"]
+
 dayAtDisney = MadLib(["adjective", "noun", "adjective", "noun", "adverb", "noun", "adjective", "noun"],
                     dayAtDisneyText)
 
