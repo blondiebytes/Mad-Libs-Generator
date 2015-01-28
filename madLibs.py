@@ -20,7 +20,9 @@ import os
 # Noun Data Source: http://www.talkenglish.com/Vocabulary/Top-1500-Nouns.aspx
 
 # TO DO:
-# Feature where user creates a story
+# Add more MadLibs and have them written to a file instead of hard coded.
+# Have a feature that selects a random MadLib 
+# Feature where user creates a story --> write them to a file?
 
 class MadLib :
     __orderOfParts = [""]
