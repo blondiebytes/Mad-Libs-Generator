@@ -111,16 +111,17 @@ def checkUserInput(speech, userInput) :
 def lengthOfFile(speech):
     speechFile = open("{}.txt".format(speech), 'r')
     with speechFile as f:
+        # _ for throwaway variable
         return sum(1 for _ in f)
 
 def randomInput(speech) :
     speechFile = open("{}.txt".format(speech), 'r')
     lengthOfSpeechFile = lengthOfFile(speech)
-        # _ for throwaway variable
     #random(0,length of speech file)
-    line = random.randrange(0, lengthOfSpeechFile)
+    specificLine = random.randrange(0, lengthOfSpeechFile)
+    allLines = speechFile.readlines()
     # use index to find a word in speech file
-    return speechFile.read(line)
+    return allLines[specificLine]
 
 
 
@@ -149,10 +150,10 @@ def nextMessage(speech):
     return "Enter a {} to continue.".format(speech)
 
 def badInputMessage(speech):
-    return ("I'm sorry. That is not a {}.".format(speech))
+    return "I'm sorry. That is not a {}.".format(speech)
 
 def emptyInputMessage(user):
-    return ("You didn't put anything in so we filled in {} for you".format(user))
+    return "You didn't put anything in so we filled in '{}' for you\n".format(user)
 
 def endMessage():
     return "Congratulations! You finished your story!"
@@ -164,7 +165,7 @@ def endMessage():
 firstPartOfSpeech = dayAtDisney.getNextOrderOfParts()
 print(welcomeMessage(firstPartOfSpeech))
 inputOne = sys.stdin.readline()
-while (not (checkUserInput(firstPartOfSpeech, inputOne))):
+while not (checkUserInput(firstPartOfSpeech, inputOne)):
     print(badInputMessage(firstPartOfSpeech))
     inputOne = sys.stdin.readline()
 #Check to make sure it matches up to the correct part of speech
@@ -178,10 +179,12 @@ for x in range(0, i):
     nextInput = sys.stdin.readline()
     #Check to make sure User Input matches up to the correct Part of Speech
     while not (checkUserInput(nextPartOfSpeech, nextInput)):
-        nextInput = randomInput(nextPartOfSpeech)
-        print(emptyInputMessage(nextInput))
-        print(badInputMessage(nextPartOfSpeech))
-        nextInput = sys.stdin.readline()
+        if nextInput == "\n":
+            nextInput = randomInput(nextPartOfSpeech)
+            print(emptyInputMessage(nextInput))
+        else:
+            print(badInputMessage(nextPartOfSpeech))
+            nextInput = sys.stdin.readline()
     dayAtDisney.setNextInput(nextInput)
    # print(dayAtDisney.getAllOrderOfParts())
    # print(dayAtDisney.getInputsEntered())
