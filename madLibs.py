@@ -14,15 +14,14 @@ import os
 
 # * This program allows for Mad Libs of different lengths to be completed
 
+# Adjectives Data Source: http://www.enchantedlearning.com/wordlist/adjectives.shtml
+# Adverb Data Source: http://www.momswhothink.com/reading/list-of-adverbs.html#Adverbs List
+# Noun Data Source: http://www.talkenglish.com/Vocabulary/Top-1500-Nouns.aspx
 
 # TO DO:
 # Add randomization if user inputs nothing
 # Create better hash for looking up if the user's input is the correct POS--> log(N) or (1)
 # Feature where user creates a story
-
-# Adjectives Data Source: http://www.enchantedlearning.com/wordlist/adjectives.shtml
-# Adverb Data Source: http://www.momswhothink.com/reading/list-of-adverbs.html#Adverbs List
-# Noun Data Source: http://www.talkenglish.com/Vocabulary/Top-1500-Nouns.aspx
 
 class MadLib :
     __orderOfParts = [""]
@@ -108,6 +107,10 @@ def checkUserInput(speech, userInput) :
     speechFile.close()
     return False
 
+def randomInput(speech) :
+    speechFile = open("{}.txt".format(speech), 'r')
+    line = #random(0,length of speech file)
+    # use index to find a word in speech file
 
 
 
@@ -212,6 +215,9 @@ def nextMessage(speech):
 def badInputMessage(speech):
     return ("I'm sorry. That is not a {}.".format(speech))
 
+def emptyInputMessage(user):
+    return ("You didn't put anything in so we filled in {} for you".format(user))
+
 def endMessage():
     return "Congratulations! You finished your story!"
 
@@ -236,6 +242,10 @@ for x in range(0, i):
     nextInput = sys.stdin.readline()
     #Check to make sure User Input matches up to the correct Part of Speech
     while not (checkUserInput(nextPartOfSpeech, nextInput)):
+        if (nextInput == ""):
+            nextInput = randomInput()
+            print(emptyInputMessage(nextInput))
+
         print(badInputMessage(nextPartOfSpeech))
         nextInput = sys.stdin.readline()
     dayAtDisney.setNextInput(nextInput)
