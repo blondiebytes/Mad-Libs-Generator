@@ -11,17 +11,15 @@ import os
 # to what the program is asking for. (DONE)
 
 # If the user does not input anything (aka just presses enter), then the program will
-# come up with a random adjective, noun, etc to put in the space.
+# come up with a random adjective, noun, etc to put in the space. (DONE)
 
-# * This program allows for Mad Libs of different lengths to be completed
+# * This program allows for Mad Libs of different lengths to be completed (DONE)
 
 # Adjectives Data Source: http://www.enchantedlearning.com/wordlist/adjectives.shtml
 # Adverb Data Source: http://www.momswhothink.com/reading/list-of-adverbs.html#Adverbs List
 # Noun Data Source: http://www.talkenglish.com/Vocabulary/Top-1500-Nouns.aspx
 
 # TO DO:
-# Add randomization if user inputs nothing
-# Create better hash for looking up if the user's input is the correct POS--> log(N) or (1)
 # Feature where user creates a story
 
 class MadLib :
@@ -134,7 +132,7 @@ dayAtDisneyText = ["\nToday, I went to the Disney World with my best friend. I s
                    " {} to meet Mickey Mouse in his",
                    " {} and that night I gazed at \nthe",
                    " {} fireworks shooting",
-                   " from the {}"]
+                   " from the {}."]
 
 dayAtDisney = MadLib(["adjective", "noun", "adjective", "noun", "adverb", "noun", "adjective", "noun"],
                     dayAtDisneyText)
@@ -152,8 +150,8 @@ def nextMessage(speech):
 def badInputMessage(speech):
     return "I'm sorry. That is not a {}.".format(speech)
 
-def emptyInputMessage(userInput):
-    return "You didn't put anything in so we filled in {}for you.".format(userInput)
+def emptyMessage(speech):
+    return "You didn't put anything in so we filled in something else for you --> {}".format(speech)
 
 def endMessage():
     return "Congratulations! You finished your story!"
@@ -181,7 +179,7 @@ for x in range(0, i):
     while not (checkUserInput(nextPartOfSpeech, nextInput)):
         if nextInput == "\n":
             nextInput = randomInput(nextPartOfSpeech)
-            print(emptyInputMessage(nextInput))
+            print(emptyMessage(nextInput))
         else:
             print(badInputMessage(nextPartOfSpeech))
             nextInput = sys.stdin.readline()
@@ -193,81 +191,6 @@ for x in range(0, i):
 print('\n')
 print(endMessage())
 print(dayAtDisney.stringStory())
-
-
-
-# HASHTABLE / DATA STORAGE MEMORY STUFF
-# -----------------
-class HashEntry :
-    __key = ""
-    __value = ""
-
-    def __init__(self, key, value):
-        self.__key = key
-        self.__value = value
-
-    def getValue(self):
-        return self.__value
-
-    def getKey(self):
-        return self.__key
-
-
-class HashTable :
-    __size = None
-    buckets = None
-    __letterDictionary = {"aVal":0,
-                        "bVal":1,
-                        "cVal":2,
-                        "dVal":3,
-                        "eVal":4,
-                        "fVal":5,
-                        "gVal":6,
-                        "hVal":7,
-                        "iVal":8,
-                        "jVal":9,
-                        "kVal":10,
-                        "lVal":11,
-                        "mVal":12,
-                        "nVal":13,
-                        "pVal":14,
-                        "oVal":15,
-                        "uVal":16,
-                        "rVal":17,
-                        "sVal":18,
-                        "tVal":19,
-                        "uVal":20,
-                        "vVal":21,
-                        "wVal":22,
-                        "xVal":23,
-                        "yVal":24,
-                        "zVal":25
-                        }
-
-    def __init__(self):
-        self.__size = 26
-        self.buckets = [[] for x in range(self.__size)]
-
-    def add(self, thing):
-        self.buckets[self.__hash__(thing)] = thing
-
-    def isThere(self, thing):
-        return self.buckets.__contains__(thing)
-
-    def __hash__(self, thing):
-        firstLetter = thing[0]
-        key = firstLetter + "Val"
-        value = self.__letterDictionary[key]
-        return value
-
-hashtable = HashTable()
-
-#Colliding Hashtable
-hashtable.add("hi")
-hashtable.add("he")
-#print(hashtable.isThere("hi"))
-#print(hashtable.isThere("he"))
-
 
 
 
