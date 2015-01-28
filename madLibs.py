@@ -128,9 +128,9 @@ def randomInput(speech) :
 # Example of a Mad Lib
 # TO DO: Create a database with many Mad Libs and have the program choose one at random
 dayAtDisneyText = ["\nToday, I went to the Disney World with my best friend. I saw a {}",
-                   " {} \n in a",
+                   " {} \nin a",
                    " {} show at the Magic Kingdom and ate",
-                   " {} for dinner. The next day I ran",
+                   " {} for dinner. The next day\nI ran",
                    " {} to meet Mickey Mouse in his",
                    " {} and that night I gazed at \nthe",
                    " {} fireworks shooting",
@@ -152,8 +152,8 @@ def nextMessage(speech):
 def badInputMessage(speech):
     return "I'm sorry. That is not a {}.".format(speech)
 
-def emptyInputMessage(user):
-    return "You didn't put anything in so we filled in '{}' for you\n".format(user)
+def emptyInputMessage(userInput):
+    return "You didn't put anything in so we filled in {}for you.".format(userInput)
 
 def endMessage():
     return "Congratulations! You finished your story!"
@@ -265,8 +265,8 @@ hashtable = HashTable()
 #Colliding Hashtable
 hashtable.add("hi")
 hashtable.add("he")
-print(hashtable.isThere("hi"))
-print(hashtable.isThere("he"))
+#print(hashtable.isThere("hi"))
+#print(hashtable.isThere("he"))
 
 
 
