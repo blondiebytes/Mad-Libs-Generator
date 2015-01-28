@@ -1,4 +1,5 @@
 import sys
+import random
 import os
 
 # MAD LIBS OBJECTIVES
@@ -107,14 +108,92 @@ def checkUserInput(speech, userInput) :
     speechFile.close()
     return False
 
+def lengthOfFile(speech):
+    speechFile = open("{}.txt".format(speech), 'r')
+    with speechFile as f:
+        return sum(1 for _ in f)
+
 def randomInput(speech) :
     speechFile = open("{}.txt".format(speech), 'r')
-    line = #random(0,length of speech file)
+    lengthOfSpeechFile = lengthOfFile(speech)
+        # _ for throwaway variable
+    #random(0,length of speech file)
+    line = random.randrange(0, lengthOfSpeechFile)
     # use index to find a word in speech file
+    return speechFile.read(line)
 
 
 
-# HASHTABLE STUFF
+# Example of a Mad Lib
+# TO DO: Create a database with many Mad Libs and have the program choose one at random
+dayAtDisneyText = ["\nToday, I went to the Disney World with my best friend. I saw a {}",
+                   " {} \n in a",
+                   " {} show at the Magic Kingdom and ate",
+                   " {} for dinner. The next day I ran",
+                   " {} to meet Mickey Mouse in his",
+                   " {} and that night I gazed at \nthe",
+                   " {} fireworks shooting",
+                   " from the {}"]
+
+dayAtDisney = MadLib(["adjective", "noun", "adjective", "noun", "adverb", "noun", "adjective", "noun"],
+                    dayAtDisneyText)
+
+
+# UI Messages
+def welcomeMessage(speech):
+    return "Welcome to the Mad Libs Generator! Enter an {} to start your story!".format\
+        (speech)
+
+def nextMessage(speech):
+    #Add something like if starts with vowel, use an versus a
+    return "Enter a {} to continue.".format(speech)
+
+def badInputMessage(speech):
+    return ("I'm sorry. That is not a {}.".format(speech))
+
+def emptyInputMessage(user):
+    return ("You didn't put anything in so we filled in {} for you".format(user))
+
+def endMessage():
+    return "Congratulations! You finished your story!"
+
+
+# WHAT WE RUN:
+# -----------------------
+# PART I:
+firstPartOfSpeech = dayAtDisney.getNextOrderOfParts()
+print(welcomeMessage(firstPartOfSpeech))
+inputOne = sys.stdin.readline()
+while (not (checkUserInput(firstPartOfSpeech, inputOne))):
+    print(badInputMessage(firstPartOfSpeech))
+    inputOne = sys.stdin.readline()
+#Check to make sure it matches up to the correct part of speech
+dayAtDisney.setNextInput(inputOne)
+
+# PART II:
+i = len(dayAtDisney.getAllOrderOfParts()) - 1
+for x in range(0, i):
+    nextPartOfSpeech = dayAtDisney.getNextOrderOfParts()
+    print(nextMessage(nextPartOfSpeech))
+    nextInput = sys.stdin.readline()
+    #Check to make sure User Input matches up to the correct Part of Speech
+    while not (checkUserInput(nextPartOfSpeech, nextInput)):
+        nextInput = randomInput(nextPartOfSpeech)
+        print(emptyInputMessage(nextInput))
+        print(badInputMessage(nextPartOfSpeech))
+        nextInput = sys.stdin.readline()
+    dayAtDisney.setNextInput(nextInput)
+   # print(dayAtDisney.getAllOrderOfParts())
+   # print(dayAtDisney.getInputsEntered())
+
+# PART III:
+print('\n')
+print(endMessage())
+print(dayAtDisney.stringStory())
+
+
+
+# HASHTABLE / DATA STORAGE MEMORY STUFF
 # -----------------
 class HashEntry :
     __key = ""
@@ -185,78 +264,6 @@ hashtable.add("hi")
 hashtable.add("he")
 print(hashtable.isThere("hi"))
 print(hashtable.isThere("he"))
-
-
-
-# Example of a Mad Lib
-# TO DO: Create a database with many Mad Libs and have the program choose one at random
-dayAtDisneyText = ["\nToday, I went to the Disney World with my best friend. I saw a {}",
-                   " {} \n in a",
-                   " {} show at the Magic Kingdom and ate",
-                   " {} for dinner. The next day I ran",
-                   " {} to meet Mickey Mouse in his",
-                   " {} and that night I gazed at \nthe",
-                   " {} fireworks shooting",
-                   " from the {}"]
-
-dayAtDisney = MadLib(["adjective", "noun", "adjective", "noun", "adverb", "noun", "adjective", "noun"],
-                    dayAtDisneyText)
-
-
-# UI Messages
-def welcomeMessage(speech):
-    return "Welcome to the Mad Libs Generator! Enter an {} to start your story!".format\
-        (speech)
-
-def nextMessage(speech):
-    #Add something like if starts with vowel, use an versus a
-    return "Enter a {} to continue.".format(speech)
-
-def badInputMessage(speech):
-    return ("I'm sorry. That is not a {}.".format(speech))
-
-def emptyInputMessage(user):
-    return ("You didn't put anything in so we filled in {} for you".format(user))
-
-def endMessage():
-    return "Congratulations! You finished your story!"
-
-
-# WHAT WE RUN:
-# -----------------------
-# PART I:
-firstPartOfSpeech = dayAtDisney.getNextOrderOfParts()
-print(welcomeMessage(firstPartOfSpeech))
-inputOne = sys.stdin.readline()
-while (not (checkUserInput(firstPartOfSpeech, inputOne))):
-    print(badInputMessage(firstPartOfSpeech))
-    inputOne = sys.stdin.readline()
-#Check to make sure it matches up to the correct part of speech
-dayAtDisney.setNextInput(inputOne)
-
-# PART II:
-i = len(dayAtDisney.getAllOrderOfParts()) - 1
-for x in range(0, i):
-    nextPartOfSpeech = dayAtDisney.getNextOrderOfParts()
-    print(nextMessage(nextPartOfSpeech))
-    nextInput = sys.stdin.readline()
-    #Check to make sure User Input matches up to the correct Part of Speech
-    while not (checkUserInput(nextPartOfSpeech, nextInput)):
-        if (nextInput == ""):
-            nextInput = randomInput()
-            print(emptyInputMessage(nextInput))
-
-        print(badInputMessage(nextPartOfSpeech))
-        nextInput = sys.stdin.readline()
-    dayAtDisney.setNextInput(nextInput)
-   # print(dayAtDisney.getAllOrderOfParts())
-   # print(dayAtDisney.getInputsEntered())
-
-# PART III:
-print('\n')
-print(endMessage())
-print(dayAtDisney.stringStory())
-
 
 
 
